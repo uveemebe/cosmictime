@@ -63,7 +63,7 @@ const updateDayButtons = (): void => {
 };
 
 // Modal controls
-const showModal = (): void => {
+const openTaskModal = (): void => {
   const modal = document.getElementById(DOM_IDS.MODAL);
   if (!modal) return;
 
@@ -74,7 +74,7 @@ const showModal = (): void => {
   textInput?.focus();
 };
 
-const hideModal = (): void => {
+const closeTaskModal = (): void => {
   const modal = document.getElementById(DOM_IDS.MODAL);
   if (!modal) return;
 
@@ -88,7 +88,7 @@ const hideModal = (): void => {
 };
 
 // Form submission
-const handleSubmit = (e: Event): void => {
+const saveTask = (e: Event): void => {
   e.preventDefault();
 
   const textInput = document.getElementById(DOM_IDS.TASK_TEXT) as HTMLInputElement;
@@ -105,7 +105,7 @@ const handleSubmit = (e: Event): void => {
     uiState.selectedDays.size > 0 ? Array.from(uiState.selectedDays) : undefined
   );
 
-  hideModal();
+  closeTaskModal();
 };
 
 // Initialize app
@@ -167,9 +167,9 @@ const initApp = (): void => {
   `;
 
   // Delegated event listeners (prevents memory leaks)
-  document.getElementById(DOM_IDS.ADD_BTN)?.addEventListener('click', showModal);
-  document.getElementById(DOM_IDS.CANCEL_BTN)?.addEventListener('click', hideModal);
-  document.getElementById(DOM_IDS.FORM)?.addEventListener('submit', handleSubmit);
+  document.getElementById(DOM_IDS.ADD_BTN)?.addEventListener('click', openTaskModal);
+  document.getElementById(DOM_IDS.CANCEL_BTN)?.addEventListener('click', closeTaskModal);
+  document.getElementById(DOM_IDS.FORM)?.addEventListener('submit', saveTask);
 
   // Weekday buttons
   WEEKDAYS.forEach(day => {
@@ -178,7 +178,7 @@ const initApp = (): void => {
 
   // Modal backdrop click
   document.getElementById(DOM_IDS.MODAL)?.addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) hideModal();
+    if (e.target === e.currentTarget) closeTaskModal();
   });
 
   // Task list delegation (fix memory leak)
