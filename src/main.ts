@@ -7,8 +7,7 @@ import {
   toggleTaskExpansion,
   renderTask,
   renderEmptyState,
-  getWeekdayButtonClass,
-  getDailyMantra
+  getWeekdayButtonClass
 } from './components';
 
 // App state
@@ -114,18 +113,16 @@ const initApp = (): void => {
   if (!app) return;
 
   app.innerHTML = `
-    <div class="max-w-md mx-auto mt-8 bg-white rounded-lg shadow-md p-6 min-h-[300px] flex flex-col justify-between border border-gray-200">
-      <div id="${DOM_IDS.TASK_LIST}" class="flex-grow"></div>
-      <footer class="flex justify-between items-center mt-6 pt-4 border-t border-gray-100">
-        <span class="text-xs text-gray-400 italic">${getDailyMantra()}</span>
-        <button id="${DOM_IDS.ADD_BTN}" class="bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow hover:scale-105 hover:shadow-lg transition-all active:scale-95" aria-label="Add task">
-          <img src="/add.svg" alt="Add" class="w-6 h-6" />
-        </button>
-      </footer>
+    <div class="w-screen h-screen bg-white flex flex-col">
+      <div id="${DOM_IDS.TASK_LIST}" class="flex-grow overflow-y-auto p-6"></div>
     </div>
+    
+    <button id="${DOM_IDS.ADD_BTN}" class="fixed bottom-6 right-6 bg-blue-500 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-all active:scale-95 z-40" aria-label="Add task">
+      <img src="/add.svg" alt="Add" class="w-6 h-6" />
+    </button>
 
-    <div id="${DOM_IDS.MODAL}" class="hidden fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50">
-      <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+    <div id="${DOM_IDS.MODAL}" class="hidden fixed inset-0 bg-black bg-opacity-50 items-start justify-center z-50 overflow-y-auto pt-8 pb-8">
+      <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4 my-auto">
         <form id="${DOM_IDS.FORM}" class="space-y-4">
           <input
             type="text"
